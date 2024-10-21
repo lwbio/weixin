@@ -22,6 +22,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/url"
+	"strconv"
 
 	"github.com/lixinio/weixin/utils"
 )
@@ -179,7 +180,7 @@ func (api *MaterialApi) UploadAttachment(
 	if err := api.Client.HttpFile(
 		ctx, apiUploadTempMedia, "media", filename, content, func(params url.Values) {
 			params.Add("media_type", mediaType)
-			params.Add("attachment_type", string(aType))
+			params.Add("attachment_type", strconv.Itoa(int(aType)))
 		}, result,
 	); err != nil {
 		return nil, err

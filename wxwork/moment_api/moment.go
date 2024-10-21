@@ -31,22 +31,20 @@ type Text struct {
 }
 
 type Attachment struct {
-	MsgType     string       `json:"msgtype"`
-	Image       *Image       `json:"image,omitempty"`
-	Link        *Link        `json:"link,omitempty"`
-	Video       *Video       `json:"video,omitempty"`
+	MsgType string `json:"msgtype"`
+	Image   *Image `json:"image,omitempty"`
+	Link    *Link  `json:"link,omitempty"`
+	Video   *Video `json:"video,omitempty"`
 }
 
 type Image struct {
 	MediaID string `json:"media_id"`
-	PicURL  string `json:"pic_url"`
 }
 
 type Link struct {
-	Title  string `json:"title"`
-	PicURL string `json:"picurl"`
-	Desc   string `json:"desc"`
-	URL    string `json:"url"`
+	Title   string `json:"title"`
+	URL     string `json:"url"`
+	MediaID string `json:"media_id"`
 }
 type Video struct {
 	MediaID string `json:"media_id"`
@@ -91,14 +89,18 @@ type Video struct {
 //		}
 //	}
 
+type SenderList struct {
+	UserList       []string `json:"user_list"`
+	DepartmentList []int32  `json:"department_list"`
+}
+
+type ExternalContactList struct {
+	TagList []string `json:"tag_list"`
+}
+
 type VisibleRange struct {
-	SenderList struct {
-		UserList       []string `json:"user_list"`
-		DepartmentList []int32  `json:"department_list"`
-	} `json:"sender_list"`
-	ExternalContactList struct {
-		TagList []string `json:"tag_list"`
-	} `json:"external_contact_list"`
+	SenderList          *SenderList          `json:"sender_list"`
+	ExternalContactList *ExternalContactList `json:"external_contact_list"`
 }
 
 type CreateMomentTaskRequest struct {
@@ -177,9 +179,9 @@ type MomentTaskResult struct {
 
 type GetMomentTaskResultResponse struct {
 	utils.WeixinError
-	Status int8             `json:"status"`
-	Type   string           `json:"type"`
-	Result MomentTaskResult `json:"result"`
+	Status int8              `json:"status"`
+	Type   string            `json:"type"`
+	Result *MomentTaskResult `json:"result"`
 }
 
 // GetMomentTaskResult 获取任务创建结果

@@ -168,6 +168,13 @@ func (api *MaterialApi) Save(ctx context.Context, mediaID string, saver io.Write
 // 	return http.DefaultClient.Do(req)
 // }
 
+type AttachmentID struct {
+	utils.WeixinError
+	MediaID   string `json:"media_id"`
+	Type      string `json:"type"`
+	CreatedAt int    `json:"created_at"`
+}
+
 // 上传附件资源
 func (api *MaterialApi) UploadAttachment(
 	ctx context.Context,
@@ -175,8 +182,8 @@ func (api *MaterialApi) UploadAttachment(
 	content io.Reader,
 	mediaType string,
 	aType AttachmentType,
-) (result *MaterialID, err error) {
-	result = &MaterialID{}
+) (result *AttachmentID, err error) {
+	result = &AttachmentID{}
 	if err := api.Client.HttpFile(
 		ctx, apiUploadTempMedia, "media", filename, content, func(params url.Values) {
 			params.Add("media_type", mediaType)
